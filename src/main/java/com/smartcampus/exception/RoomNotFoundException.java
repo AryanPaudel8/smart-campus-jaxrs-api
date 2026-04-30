@@ -8,6 +8,16 @@ package com.smartcampus.exception;
  *
  * @author aryanpaudel
  */
-public class RoomNotFoundException {
-    
+public class RoomNotFoundException extends RuntimeException {
+
+    private final String roomId;
+
+    public RoomNotFoundException(String roomId) {
+        super("Room not found with ID: " + roomId);
+        this.roomId = roomId;
+    }
+
+    public String getRoomId() {
+        return roomId;
+    }
 }

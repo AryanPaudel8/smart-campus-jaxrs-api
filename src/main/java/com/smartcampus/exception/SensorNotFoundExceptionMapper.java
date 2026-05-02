@@ -8,12 +8,13 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 /**
+ * Translates {@link SensorNotFoundException} into a structured HTTP 404 response.
  *
  * @author aryanpaudel
  */
 @Provider
 public class SensorNotFoundExceptionMapper implements ExceptionMapper<SensorNotFoundException> {
-
+ 
     @Override
     public Response toResponse(SensorNotFoundException ex) {
         ErrorResponse body = new ErrorResponse(404, "Not Found", ex.getMessage());
@@ -23,3 +24,4 @@ public class SensorNotFoundExceptionMapper implements ExceptionMapper<SensorNotF
                 .build();
     }
 }
+

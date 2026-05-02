@@ -6,18 +6,24 @@ package com.smartcampus.model;
 
 import java.util.UUID;
 /**
+ * Domain model representing a single timestamped data point from a sensor.
+ *
+ * <p>Readings are immutable records of what a sensor measured at a point in time.
+ * The {@code id} and {@code timestamp} fields are auto-generated server-side when
+ * not provided by the client, which keeps the POST contract simple for hardware
+ * devices that may lack reliable clocks or UUID generation capabilities.</p>
  *
  * @author aryanpaudel
  */
 public class SensorReading {
-     private String id;        // Unique reading event ID (UUID)
-    private long timestamp;   // Epoch time (ms) when the reading was captured
-    private double value;     // The actual metric value recorded by the hardware
  
-    // ── Constructors ──────────────────────────────────────────────────────────
+    private String id;        // UUID uniquely identifying this reading event
+    private long timestamp;   // Epoch milliseconds — chosen over ISO strings for sorting efficiency
+    private double value;     // The raw metric captured by the sensor hardware
  
     public SensorReading() {}
  
+    /** Convenience constructor that auto-generates the id and timestamp. Used for seed data. */
     public SensorReading(double value) {
         this.id = UUID.randomUUID().toString();
         this.timestamp = System.currentTimeMillis();
@@ -30,29 +36,13 @@ public class SensorReading {
         this.value = value;
     }
  
-    // ── Getters & Setters ─────────────────────────────────────────────────────
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
  
-    public String getId() {
-        return id;
-    }
+    public long getTimestamp() { return timestamp; }
+    public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
  
-    public void setId(String id) {
-        this.id = id;
-    }
- 
-    public long getTimestamp() {
-        return timestamp;
-    }
- 
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
- 
-    public double getValue() {
-        return value;
-    }
- 
-    public void setValue(double value) {
-        this.value = value;
-    }
+    public double getValue() { return value; }
+    public void setValue(double value) { this.value = value; }
 }
+
